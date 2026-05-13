@@ -728,7 +728,7 @@ export function GRFormPanel({ isOpen, onClose, editData }: GRFormPanelProps) {
                     <div className="relative">
                       <select value={form.billingType} onChange={set('billingType')} className={inputClass + ' appearance-none pr-10'}>
                         <option value={BillingType.TO_PAID}>To Paid</option>
-                        <option value={BillingType.TO_BE_PAID}>To Be Paid</option>
+                        <option value={BillingType.TO_BE_BILLED}>To Be Billed</option>
                         <option value={BillingType.PAID}>Paid</option>
                       </select>
                       <ChevronDown size={15} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
