@@ -1,7 +1,20 @@
 import apiClient from './client';
 import { ApiResponse } from '@/types/api';
-import { AuthResponse, ProfileData, User } from '@/types/session';
+import { AuthResponse, CompanyAddress, CompanyBankDetails, ProfileData, User } from '@/types/session';
 import { LoginInput, RegisterInput, ActivateInput } from '@/lib/validations/auth.schema';
+
+type EditableCompanyFields = Pick<
+  User['company'],
+  'companyName' | 'gstin' | 'pan' | 'phone' | 'email' | 'contactPerson' | 'logoUrl'
+>;
+
+type UpdateProfileInput = Partial<Pick<User, 'name' | 'phone' | 'email'>> & {
+  password?: string;
+  company?: Partial<EditableCompanyFields> & {
+    address?: Partial<CompanyAddress>;
+    bankDetails?: Partial<CompanyBankDetails>;
+  };
+};
 
 export const authApi = {
   /**
@@ -72,8 +85,7 @@ export const authApi = {
   /**
    * Updates user profile fields.
    */
-  updateProfile: async (data: Partial<Pick<User, 'name' | 'phone'>>): Promise<ApiResponse<User>> => {
-    console.log('[AUTH] UpdateProfile called with:', data);
+  updateProfile: async (data: UpdateProfileInput): Promise<ApiResponse<User>> => {
     return apiClient.put('/auth/profile', data) as any;
   },
 };
